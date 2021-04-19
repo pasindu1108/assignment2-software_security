@@ -75,6 +75,8 @@ if (isset($_GET['code']))
     return;
 }
 
+
+	
 // PAGE RELOAD?
 if (isset($_SESSION['token'])) 
 {
@@ -101,8 +103,10 @@ if ($gClient->getAccessToken()) // Sign in
 		$profile_image_url    = filter_var($user['picture'], FILTER_VALIDATE_URL);
 		$personMarkup         = "$email<div><img src='$profile_image_url?sz=50'></div>";
 		$_SESSION['token']    = $gClient->getAccessToken();
-		
-	
+        $_SESSION['retoken']    =$gClient->getRefreshToken();
+		$arr = json_decode(json_encode($_SESSION['token']));
+        $to = $arr->access_token;
+        file_put_contents('token.json',  '{"access_token": "'.$to.'", "expires_in": 3599,"refresh_token":"1\/\/0gjBBJrwz540vCgYIARAAGBASNwF-L9Ir6NhuzuAKDcvGNK28IuaSpHkLzgHXnb8lwunZMatfUZBxtNaIfXDvfC7z4WkgjD_3QaU","scope":"https:\/\/www.googleapis.com\/auth\/drive","token_type":"Bearer","created":1618817979}' );
         //HTML code (View course details / Course registration / Assignment Submission)
         echo ' <section id="home" class="video-section js-height-full">
         <br /><br /><br /><br /><br /><a  style = "position:absolute; left:30px; top:200px;" href="?logout=1" class="btn btn-primary wow slideInLeft">Log Out</a><br />
